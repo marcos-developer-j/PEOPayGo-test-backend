@@ -14,7 +14,7 @@ export class SheetTimeService {
     private readonly userService: UserService,
   ) {}
   async create(timeSheet: CreateSheetTimeDto) {
-    const user = await this.userService.getUsersById(timeSheet.user);
+    const user = await this.userService.findOne(timeSheet.user);
     const newTimeSheet = { ...timeSheet, user };
     const response = await this.sheetTimeRepository.save(newTimeSheet);
     return response;
