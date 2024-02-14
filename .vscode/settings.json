@@ -1,0 +1,6 @@
+{
+    "prettier.endOfLine": "auto",
+    "files.eol": "\n",
+    "js-beautify.end_with_newline": true,
+    "js-beautify.comma_first": true
+}
