@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import {
   Body,
@@ -12,7 +13,7 @@ import {
 import { UserService } from './user.service';
 import { CreateUser, UpdateUser } from './dto/User.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-@UseGuards(JwtAuthGuard)
+/* @UseGuards(JwtAuthGuard) */
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

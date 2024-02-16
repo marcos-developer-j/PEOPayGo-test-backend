@@ -4,19 +4,20 @@ import { SheetTime } from 'src/sheet-time/entities/sheet-time.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
-  @Column()
+  id!: number;
+  @Column({ type: 'varchar' })
   name: string;
-  @Column()
+  @Column({ type: 'varchar' })
   password: string;
-  @Column({ default: false, unique: true })
+  @Column({ type: 'varchar', default: false, unique: true })
   email: string;
-  @Column({ default: 'customer' })
+  @Column({ type: 'varchar', default: 'customer' })
   role: string;
-  @Column({ default: () => new Date(), nullable: false })
+  @Column({ type: 'timestamp' })
   creaated_at: Date;
-  @Column({ default: () => new Date(), nullable: false })
+  @Column({ type: 'timestamp' })
   updated_ad: Date;
-  @OneToMany(() => SheetTime, (sheetTime) => sheetTime.user)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @OneToMany((type) => SheetTime, (sheetTime) => sheetTime.user)
   time_sheets: SheetTime[];
 }

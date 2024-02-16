@@ -4,20 +4,20 @@ import { SheetTime } from '../../sheet-time/entities/sheet-time.entity';
 @Entity()
 export class Registry {
   @PrimaryGeneratedColumn()
-  id: number;
-  @Column()
+  id!: number;
+  @Column({ type: 'varchar' })
   employe: string;
-  @Column()
+  @Column({ type: 'varchar' })
   hourly_rate: number;
-  @Column()
+  @Column({ type: 'integer' })
   hours: number;
-  @Column()
+  @Column({ type: 'decimal' })
   total: number;
-  @Column({ default: () => new Date(), nullable: false })
+  @Column({ type: 'timestamp' })
   creaated_at: Date;
-  @Column({ default: () => new Date(), nullable: false })
+  @Column({ type: 'timestamp' })
   updated_ad: Date;
   // eslint-disable-next-line camelcase
-  @ManyToOne(() => SheetTime, (sheet_time) => sheet_time.registries)
+  @ManyToOne((type) => SheetTime, (sheet_time) => sheet_time.registries)
   sheet_time: SheetTime;
 }

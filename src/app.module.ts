@@ -8,28 +8,23 @@ import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { Registry } from './registry/entities/registry.entity';
 import { SheetTime } from './sheet-time/entities/sheet-time.entity';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmPostgresService } from 'src/type-orm-mysql.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      useClass: TypeOrmPostgresService,
     }),
     SheetTimeModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.HOST_DATABASE || 'localhost',
-      port: 3306,
-      username: process.env.USERNAME_DATABASE || 'root',
-      password: process.env.PASS_DATABASE || 'root',
-      database: process.env.NAME_DATABASE || 'test',
-      entities: [User, Registry, SheetTime],
-      synchronize: true,
-    }),
     RegistryModule,
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TypeOrmPostgresService],
 })
 export class AppModule {}

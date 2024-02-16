@@ -9,9 +9,9 @@ import { UserService } from 'src/user/user.service';
 @Injectable()
 export class SheetTimeService {
   constructor(
+    private readonly userService: UserService,
     @InjectRepository(SheetTime)
     private readonly sheetTimeRepository: Repository<SheetTime>,
-    private readonly userService: UserService,
   ) {}
   async create(timeSheet: CreateSheetTimeDto) {
     const user = await this.userService.findOne(timeSheet.user);

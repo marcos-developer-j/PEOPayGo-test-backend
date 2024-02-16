@@ -11,17 +11,17 @@ import { User } from 'src/user/entities/user.entity';
 @Entity()
 export class SheetTime {
   @PrimaryGeneratedColumn()
-  id: number;
-  @Column()
+  id!: number;
+  @Column({ type: 'varchar' })
   name: string;
-  @Column({ default: true })
+  @Column({ type: 'boolean', default: true })
   pending: boolean;
-  @ManyToOne(() => User, (user) => user.time_sheets)
+  @ManyToOne((type) => User, (user) => user.time_sheets)
   user: User;
-  @OneToMany(() => Registry, (registry) => registry.sheet_time)
+  @OneToMany((type) => Registry, (registry) => registry.sheet_time)
   registries: Registry[];
-  @Column({ default: () => new Date(), nullable: false })
+  @Column({ type: 'timestamp' })
   creaated_at: Date;
-  @Column({ default: () => new Date(), nullable: false })
+  @Column({ type: 'timestamp' })
   updated_ad: Date;
 }
