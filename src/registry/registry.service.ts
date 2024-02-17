@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Registry } from './entities/registry.entity';
 import { Repository } from 'typeorm';
 import { CreateRegistryDto, UpdateRegistryDto } from './dto/registry.dto';
-import { SheetTimeService } from 'src/sheet-time/sheet-time.service';
+import { SheetTimeService } from '../sheet-time/sheet-time.service';
 
 @Injectable()
 export class RegistryService {
@@ -32,9 +32,11 @@ export class RegistryService {
   }
 
   async update(id: number, updateRegistryDto: UpdateRegistryDto) {
+    await this.registryRepository.findOneByOrFail({ id });
     const updatedRegistry = await this.registryRepository.save({
       ...updateRegistryDto,
       id: Number(id),
+      updated_at: new Date(),
     });
     return updatedRegistry;
   }

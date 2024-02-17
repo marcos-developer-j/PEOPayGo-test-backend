@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
@@ -12,14 +12,25 @@ export class UserService {
     private usersRepository: Repository<User>,
   ) {}
   async create(user: CreateUser) {
-    user.password = bcrypt.hash(user.password, 10);
-    const newUser = await this.usersRepository.save(user);
-    return newUser;
+    user.password = await bcrypt.hash(user.password, 10);
+    if (await this.usersRepository.existsBy({ email: user.email }))
+      throw new InternalServerErrorException(
+        'El email ya se encuentra registrado en nuestra pagina',
+      );
+    const newUser = {
+      ...user,
+      created_at: new Date(),
+      updated_at: new Date(),
+    };
+    const response = await this.usersRepository.save(newUser);
+    return response;
   }
   async update(id: number, user: UpdateUser) {
+    await this.usersRepository.findOneByOrFail({ id });
     const updatedUser = await this.usersRepository.save({
       ...user,
       id: Number(id),
+      updated_at: new Date(),
     });
     return updatedUser;
   }

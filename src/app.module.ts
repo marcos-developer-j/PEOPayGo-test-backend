@@ -5,11 +5,9 @@ import { SheetTimeModule } from './sheet-time/sheet-time.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RegistryModule } from './registry/registry.module';
 import { UserModule } from './user/user.module';
-import { User } from './user/entities/user.entity';
-import { Registry } from './registry/entities/registry.entity';
-import { SheetTime } from './sheet-time/entities/sheet-time.entity';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmPostgresService } from 'src/type-orm-mysql.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +21,7 @@ import { TypeOrmPostgresService } from 'src/type-orm-mysql.service';
     SheetTimeModule,
     RegistryModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, TypeOrmPostgresService],

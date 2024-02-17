@@ -6,6 +6,8 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Max,
+  Min,
   ValidateNested,
 } from 'class-validator';
 import { SheetTime } from 'src/sheet-time/entities/sheet-time.entity';
@@ -14,16 +16,24 @@ export class CreateRegistryDto {
   @IsString()
   employe: string;
   @IsNumber()
+  @Min(0)
+  @Max(12.0)
   hourly_rate: number;
   @IsNumber()
+  @IsDefined()
   hours: number;
   @IsNumber()
+  @Min(100)
   total: number;
   @IsDate()
-  creaated_at: Date;
+  @IsOptional()
+  created_at: Date;
   @IsDate()
-  updated_ad: Date;
+  @IsOptional()
+  updated_at: Date;
   // eslint-disable-next-line camelcase
+  @IsNumber()
+  @IsDefined()
   sheet_time: number;
 }
 export class UpdateRegistryDto {
@@ -40,9 +50,10 @@ export class UpdateRegistryDto {
   @IsOptional()
   total: number;
   @IsDate()
-  @IsDefined()
-  updated_ad: Date;
+  @IsOptional()
+  updated_at: Date;
   @IsNumber()
+  @IsOptional()
   sheet_time_id: number;
 }
 
@@ -58,9 +69,9 @@ export class RegistryDto {
   @IsNumber()
   total: number;
   @IsDate()
-  creaated_at: Date;
+  created_at: Date;
   @IsDate()
-  updated_ad: Date;
+  updated_at: Date;
   // eslint-disable-next-line camelcase
   @ValidateNested()
   @Type(() => SheetTime)

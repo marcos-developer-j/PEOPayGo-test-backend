@@ -13,11 +13,11 @@ export class Registry {
   hours: number;
   @Column({ type: 'decimal' })
   total: number;
-  @Column({ type: 'timestamp' })
-  creaated_at: Date;
-  @Column({ type: 'timestamp' })
-  updated_ad: Date;
+  @Column({ type: 'timestamp', default: new Date() })
+  created_at: Date;
+  @Column({ type: 'timestamp', default: new Date() })
+  updated_at: Date;
   // eslint-disable-next-line camelcase
-  @ManyToOne((type) => SheetTime, (sheet_time) => sheet_time.registries)
+  @ManyToOne(() => SheetTime, (sheet_time) => sheet_time.registries)
   sheet_time: SheetTime;
 }

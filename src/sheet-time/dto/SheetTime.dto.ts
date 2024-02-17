@@ -22,16 +22,12 @@ export class CreateSheetTimeDto {
   @IsNumber()
   @IsDefined()
   user: number;
-  @IsArray()
-  @ValidateNested({ each: true }) // Para validar cada elemento del array
-  @Type(() => Registry)
-  registries: Registry[];
   @IsDate()
   @IsOptional()
   creaated_at: Date;
   @IsDate()
   @IsOptional()
-  updated_ad: Date;
+  updated_at: Date;
 }
 export class UpdateSheetTimeDto {
   @IsNumber()
